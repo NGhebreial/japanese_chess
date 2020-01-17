@@ -7,7 +7,7 @@ class Bishop extends Piece{
     };
 
     imageLink = () => {
-        return 'https://orangain.github.io/shogi-piece-images/dist/0HI.svg';
+        return 'https://orangain.github.io/shogi-piece-images/dist/0KA.svg';
     };
 
     imagePromoted = () => {

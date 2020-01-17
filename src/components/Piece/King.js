@@ -1,0 +1,27 @@
+import Piece from "./index";
+import {PIECES_MOVEMENTS, TURNS} from "../constants";
+import PropTypes from 'react-proptypes';
+
+class King extends Piece {
+    name = () => {
+        return 'King';
+    };
+
+    imageLink = () => {
+        const {side} = this.props;
+        if (side === TURNS.white) {
+            return 'https://orangain.github.io/shogi-piece-images/dist/0OU.svg';
+        }
+        return 'https://orangain.github.io/shogi-piece-images/dist/0GY.svg';
+    };
+
+    isPromotable = () => {
+        return false;
+    };
+
+    attackCoords = () => {
+        return PIECES_MOVEMENTS.king;
+    };
+}
+
+export default King;

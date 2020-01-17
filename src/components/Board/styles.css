@@ -1,0 +1,20 @@
+.board{
+  border:  3em solid lightgrey;
+  border-radius: 2em;
+}
+
+.row{
+  margin: 0;
+}
+
+.rowIndex{
+  position: absolute;
+  z-index: 100;
+  margin-left: -1.3em;
+  margin-top: 1em;
+  font-size: 25px;
+}
+.colIndex{
+  margin-top: -1.5em;
+  font-size: 25px;
+}

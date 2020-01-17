@@ -1,0 +1,6 @@
+.piece{
+  margin-top: 1em;
+}
+img.white{
+  transform: rotate(180deg);
+}

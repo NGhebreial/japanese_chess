@@ -1,7 +1,8 @@
 /**
  * Columns
  * */
-export const COLS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+export const COLS = [9, 8, 7, 6, 5, 4, 3, 2, 1];
+//export const COLS = ['9', '8', '7', '6', '5', '4', '3', '2', '1'];
 /**
  * Rows
  * */
@@ -14,64 +15,75 @@ export const TURNS = {
   white: 'white',
   black: 'black'
 };
+
+export const PIECES = {
+  pawn: 'pawn',
+  lance: 'lance',
+  knight: 'knight',
+  silver: 'silver',
+  golden: 'golden',
+  king: 'king',
+  rook: 'rook',
+  bishop: 'bishop'
+};
 /**
  * The initial position for every piece on row, col
  * */
 export const INITIAL_COORDS = {
-  'white': {
-    pawn: [],
-    lance: [
+  [TURNS.white]: {
+    [PIECES.pawn]: [],
+    [PIECES.lance]: [
       [0, 0],
       [0, 8]
     ],
-    knight: [
+    [PIECES.knight]: [
       [0, 1],
       [0, 7]
     ],
-    silver: [
+    [PIECES.silver]: [
       [0, 2],
       [0, 6]
     ],
-    golden: [
+    [PIECES.golden]: [
       [0, 3],
       [0, 5]
     ],
-    king: [
+    [PIECES.king]: [
       [0, 4]
     ],
-    rook: [
+    [PIECES.rook]: [
       [1, 1]
     ],
-    bishop: [
+    [PIECES.bishop]: [
       [1, 7]
     ],
   },
-  'black': {
-    pawn: [],
-    lance: [
+  [TURNS.black]: {
+    [PIECES.pawn]: [],
+    [PIECES.lance]: [
       [8, 0],
       [8, 8]
     ],
-    knight: [
+    [PIECES.knight]: [
       [8, 1],
       [8, 7]
     ],
-    silver: [
+    [PIECES.silver]: [
       [8, 2],
       [8, 6]
     ],
-    golden: [
+    [PIECES.golden]: [
       [8, 3],
       [8, 5]
     ],
-    king: [
+    [PIECES.king]: [
       [8, 4]
     ],
-    rook: [
-      [7, 1]
-    ],
-    bishop: [
+    [PIECES.rook]: [
       [7, 7]
+    ],
+    [PIECES.bishop]: [
+      [7, 1]
     ],
   },
 };

@@ -1,0 +1,5 @@
+.square{
+  border: 2px solid lightgrey;
+  border-radius: 5px;
+  min-height: 6em;
+}

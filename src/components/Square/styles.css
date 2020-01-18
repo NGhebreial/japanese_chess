@@ -3,3 +3,7 @@
   border-radius: 5px;
   min-height: 6em;
 }
+
+.highlight{
+  border: 2px solid lightcoral;
+}

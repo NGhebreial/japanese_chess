@@ -1,6 +1,6 @@
 import React from 'react';
 import './assets/App.css';
-import BoardContainer from './components/containers/BoardContainer';
+import Board from './components/Board';
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
         Japanese Chess
       </header>
       <div>
-        <BoardContainer/>
+        <Board/>
       </div>
     </div>
   );

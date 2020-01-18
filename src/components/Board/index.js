@@ -18,7 +18,8 @@ class Board extends React.Component {
     this.removeHighlighted = this.removeHighlighted.bind(this);
     this.state = {
       pieces: getInitialPiecesDisposition(),
-      selected: {}
+      selected: {},
+      indexes: [],
     }
   }
 
@@ -40,24 +41,29 @@ class Board extends React.Component {
 
   onClick = (piece) => {
     const {selected, pieces} = this.state;
-    // If there is no piece selected -> first click
-    if( Object.keys(selected).length === 0 ){
+    // If there is no piece selected or if we select another one-> first click
+    if( Object.keys(selected).length === 0 || selected.ref.current.props.side === piece.ref.current.props.side){
       const new_pieces = this.removeHighlighted(pieces);
       const indexes = getHighlightedIndexes(new_pieces, piece);
       indexes.map((index) => {
         new_pieces[index[0]][index[1]].isHighlight = true;
       });
-      this.setState({pieces: new_pieces, selected: piece});
+      this.setState({pieces: new_pieces, selected: piece, indexes});
     }
     else{
-      const {selected, pieces} = this.state;
-      //Set the selected piece in the new position
-      pieces[piece.position[0]][piece.position[1]] = selected;
-      //Remove the piece from the previous position
-      pieces[selected.position[0]][selected.position[1]] =
-        buildPieceObject(<Blank/>, selected.position[0], selected.position[1], true);
-      const new_pieces = this.removeHighlighted(pieces);
-      this.setState({pieces: new_pieces, selected: {}});
+      const {selected, pieces, indexes} = this.state;
+      let pieceToChange = pieces[piece.position[0]][piece.position[1]];
+      const isValidIndex = indexes.some( i =>i[0] === piece.position[0] && i[1] === piece.position[1]);
+      // Update only if the movement is valid
+      if( pieceToChange.isHighlight && isValidIndex){
+        //Set the selected piece in the new position
+        pieces[piece.position[0]][piece.position[1]] = selected;
+        //Remove the piece from the previous position
+        pieces[selected.position[0]][selected.position[1]] =
+          buildPieceObject(<Blank/>, selected.position[0], selected.position[1], true);
+        const new_pieces = this.removeHighlighted(pieces);
+        this.setState({pieces: new_pieces, selected: {}, indexes: []});
+      }
     }
   };
 

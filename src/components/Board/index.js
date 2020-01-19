@@ -34,7 +34,7 @@ class Board extends React.Component {
   onClick = (piece) => {
     const { selected, pieces, indexes } = this.state;
     // If there is no piece selected or if we select another one-> first click
-    if (Object.keys(selected).length === 0 ) {
+    if (Object.keys(selected).length === 0) {
       this.pieceSelected(piece);
     } else {
       let pieceToChange = pieces[piece.position[0]][piece.position[1]];
@@ -44,12 +44,12 @@ class Board extends React.Component {
         this.movePiece(piece);
       }
       //If the square selected is empty and it's not a valid movement -> remove selection
-      else if( piece.isEmpty ){
+      else if (piece.isEmpty) {
         const new_pieces = this.removeHighlighted(pieces);
         this.setState({ pieces: new_pieces, selected: {}, indexes: [] });
       }
       // In other case another piece is being selected
-      else{
+      else {
         this.pieceSelected(piece);
       }
     }
@@ -64,7 +64,7 @@ class Board extends React.Component {
     pieces[newPosition[0]][newPosition[1]] = selected;
     //Set the new position empty
     pieces[previousPosition[0]][previousPosition[1]] =
-      buildPieceObject(<Blank/>, previousPosition[0], previousPosition[1], null,true);
+      buildPieceObject(<Blank/>, previousPosition[0], previousPosition[1], null, true);
     const new_pieces = this.removeHighlighted(pieces);
     this.setState({ pieces: new_pieces, selected: {}, indexes: [] });
   };

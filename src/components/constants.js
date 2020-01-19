@@ -135,11 +135,10 @@ export const PIECES_MOVEMENTS = {
   bishop: [],
   rook: []
 };
-// For lance front middle all the row
-for (let i = 1; i <= ROWS.length; i++) {
-  PIECES_MOVEMENTS.lance.push([0, i]);
-}
+
 // For rock fall the sides
+// For bishop all the diagonals
+// For lance front middle all the row
 for (let i = 1; i <= ROWS.length; i++) {
   // Front
   PIECES_MOVEMENTS.rook.push([0, i]);
@@ -149,9 +148,6 @@ for (let i = 1; i <= ROWS.length; i++) {
   PIECES_MOVEMENTS.rook.push([-i, 0]);
   // Right
   PIECES_MOVEMENTS.rook.push([i, 0]);
-}
-// For bishop all the diagonals
-for (let i = 1; i <= ROWS.length; i++) {
   // Front right
   PIECES_MOVEMENTS.bishop.push([i, i]);
   // Front left
@@ -160,4 +156,6 @@ for (let i = 1; i <= ROWS.length; i++) {
   PIECES_MOVEMENTS.bishop.push([-i, i]);
   // Back left
   PIECES_MOVEMENTS.bishop.push([-i, -i]);
+
+  PIECES_MOVEMENTS.lance.push([0, i]);
 }

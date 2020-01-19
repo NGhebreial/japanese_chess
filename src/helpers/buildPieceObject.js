@@ -1,6 +1,3 @@
-import Blank from '../components/Blank/Blank';
-import React from 'react';
-
 function buildPieceObject(component, col_index, row_index, ref, isEmpty) {
   return {
     'component': component,

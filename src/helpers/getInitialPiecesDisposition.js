@@ -10,7 +10,7 @@ const getInitialPiecesDisposition = () => {
   COLS.forEach((col, col_index) => {
     pieces[col_index] = [];
     ROWS.forEach((row, row_index) => {
-      pieces[col_index].push(buildPieceObject(<Blank/>, col_index, row_index, '', true));
+      pieces[col_index].push(buildPieceObject(<Blank/>, col_index, row_index, null, true));
     });
   });
   // Generating the components for every piece based on the initial distribution on the board

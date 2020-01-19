@@ -1,6 +1,5 @@
 import Piece from "./index";
 import {PIECES_MOVEMENTS, TURNS} from "../constants";
-import PropTypes from 'react-proptypes';
 
 class King extends Piece {
     name = () => {

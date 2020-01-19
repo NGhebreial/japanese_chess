@@ -1,59 +1,129 @@
 import React from "react";
 import Square from '../Square';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles.css";
 import { COLS, ROWS } from '../constants';
 import uuid from 'uuid/v4';
+import getInitialPiecesDisposition from '../../helpers/getInitialPiecesDisposition';
+import getHighlightedIndexes from '../../helpers/getHighlightedIndexes';
+import Blank from '../Blank/Blank';
+import buildPieceObject from '../../helpers/buildPieceObject';
 
 class Board extends React.Component {
 
   constructor(props) {
     super(props);
+    this.onClick = this.onClick.bind(this);
+    this.removeHighlighted = this.removeHighlighted.bind(this);
+    this.pieceSelected = this.pieceSelected.bind(this);
+    this.movePiece = this.movePiece.bind(this);
     this.state = {
-      pieces: {}
+      pieces: getInitialPiecesDisposition(),
+      selected: {},
+      indexes: [],
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    this.setState({
-      pieces: this.props.pieces,
+  /*  componentDidUpdate(prevProps, prevState, snapshot) {
+      this.setState({
+        pieces: this.props.pieces,
+      });
+    }*/
+
+  onClick = (piece) => {
+    const { selected, pieces, indexes } = this.state;
+    // If there is no piece selected or if we select another one-> first click
+    if (Object.keys(selected).length === 0) {
+      this.pieceSelected(piece);
+    } else {
+      let pieceToChange = pieces[piece.position[0]][piece.position[1]];
+      const isValidIndex = indexes.some(i => i[0] === piece.position[0] && i[1] === piece.position[1]);
+      // Move the piece if it's a valid movement
+      if (pieceToChange.isHighlight && isValidIndex) {
+        this.movePiece(piece);
+      }
+      //If the square selected is empty and it's not a valid movement -> remove selection
+      else if (piece.isEmpty) {
+        const new_pieces = this.removeHighlighted(pieces);
+        this.setState({ pieces: new_pieces, selected: {}, indexes: [] });
+      }
+      // In other case another piece is being selected
+      else {
+        this.pieceSelected(piece);
+      }
+    }
+  };
+
+  movePiece = (piece) => {
+    const { pieces, selected } = this.state;
+    const previousPosition = selected.position;
+    const newPosition = piece.position;
+    //Set the selected piece in the new position
+    selected.position = newPosition;
+    pieces[newPosition[0]][newPosition[1]] = selected;
+    //Set the new position empty
+    pieces[previousPosition[0]][previousPosition[1]] =
+      buildPieceObject(<Blank/>, previousPosition[0], previousPosition[1], null, true);
+    const new_pieces = this.removeHighlighted(pieces);
+    this.setState({ pieces: new_pieces, selected: {}, indexes: [] });
+  };
+
+  pieceSelected = (piece) => {
+    const { pieces } = this.state;
+    const new_pieces = this.removeHighlighted(pieces);
+    const indexes = getHighlightedIndexes(new_pieces, piece);
+    indexes.map((index) => {
+      new_pieces[index[0]][index[1]].isHighlight = true;
     });
-  }
+    this.setState({ pieces: new_pieces, selected: piece, indexes });
+  };
+
+  removeHighlighted = (pieces) => {
+    return Object.keys(pieces).map((piece_i) => {
+      //Getting only highlighted
+      const highlighted = pieces[piece_i].filter(p => p.isHighlight);
+      // Removing highlighted
+      highlighted.map(h => h.isHighlight = false);
+      return pieces[piece_i];
+    });
+  };
+
 
   render() {
 
-    const { onClick, pieces } = this.props;
+    const { pieces } = this.state;
     return (
-      <div className="board">
-        <Row className="colIndex">
-        {
-          COLS.map((col, i) =>{
-            return <Col key={uuid()}>{col}</Col>
-          }
-          )
-        }
-        </Row>
-        {
-          Object.keys(pieces).map((piece_i, i) => {
-            return (
-              <>
-              <Row key={uuid()}>
-                <span className="rowIndex">{ROWS[i]}</span>
-                {
-                  pieces[piece_i].map((piece) =>
-                    {
-                      return <Square piece={piece} onClick={onClick} key={uuid()}/>
-                    }
-                  )
+      <Container>
+        <div className="board">
+          <Row className="colIndex">
+            {
+              COLS.map((col, i) => {
+                  return <Col key={uuid()}>{col}</Col>
                 }
-              </Row>
-              </>
-            )
+              )
+            }
+          </Row>
+          {
+            Object.keys(pieces).map((piece_i, i) => {
+              return (
+                <>
+                  <Row key={uuid()}>
+                    <span className="rowIndex" key={uuid()}>{ROWS[i]}</span>
+                    {
+                      pieces[piece_i].map((piece) => {
+                          return <Square piece={piece} onClick={this.onClick} key={uuid()}/>
+                        }
+                      )
+                    }
+                  </Row>
+                </>
+              )
 
-          })
-        }
-      </div>
+            })
+          }
+        </div>
+      </Container>
     );
   }
 }

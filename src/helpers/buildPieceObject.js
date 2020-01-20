@@ -7,4 +7,5 @@ function buildPieceObject(component, col_index, row_index, ref, isEmpty) {
     'isEmpty': isEmpty,
   };
 }
+
 export default buildPieceObject;

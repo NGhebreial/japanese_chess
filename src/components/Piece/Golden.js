@@ -1,23 +1,23 @@
 import Piece from "./index";
-import {PIECES_MOVEMENTS} from "../constants";
+import { PIECES_MOVEMENTS } from "../constants";
 
-class Golden extends Piece{
+class Golden extends Piece {
 
-    name = () => {
-        return 'Golden';
-    };
+  name = () => {
+    return 'Golden';
+  };
 
-    imageLink = () => {
-        return 'https://orangain.github.io/shogi-piece-images/dist/0KI.svg';
-    };
+  imageLink = () => {
+    return 'https://orangain.github.io/shogi-piece-images/dist/0KI.svg';
+  };
 
-    isPromotable = () => {
-        return false;
-    };
+  isPromotable = () => {
+    return false;
+  };
 
-    attackCoords = () => {
-        return PIECES_MOVEMENTS.golden;
-    };
+  attackCoords = () => {
+    return PIECES_MOVEMENTS.golden;
+  };
 }
 
 export default Golden;

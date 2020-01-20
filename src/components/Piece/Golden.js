@@ -1,10 +1,10 @@
 import Piece from "./index";
-import { PIECES_MOVEMENTS } from "../constants";
+import { PIECES, PIECES_MOVEMENTS } from "../constants";
 
 class Golden extends Piece {
 
   name = () => {
-    return 'Golden';
+    return PIECES.golden;
   };
 
   imageLink = () => {

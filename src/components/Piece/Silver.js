@@ -1,9 +1,9 @@
 import Piece from "./index";
-import { PIECES_MOVEMENTS } from "../constants";
+import { PIECES, PIECES_MOVEMENTS } from "../constants";
 
 class Silver extends Piece {
   name = () => {
-    return 'Silver';
+    return PIECES.silver;
   };
 
   imageLink = () => {

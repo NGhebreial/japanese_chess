@@ -9,24 +9,24 @@ import Rook from '../components/Piece/Rook';
 import Bishop from '../components/Piece/Bishop';
 import React from 'react';
 
-const getPieceComponent = (piece, side, ref) => {
+const getPieceComponent = (piece, side, ref, isPromoted = false) => {
   switch (piece) {
     case PIECES.pawn:
-      return <Pawn side={side} ref={ref}/>;
+      return <Pawn side={side} ref={ref} isPromoted={isPromoted}/>;
     case PIECES.lance:
-      return <Lance side={side} ref={ref}/>;
+      return <Lance side={side} ref={ref} isPromoted={isPromoted}/>;
     case PIECES.knight:
-      return <Knight side={side} ref={ref}/>;
+      return <Knight side={side} ref={ref} isPromoted={isPromoted}/>;
     case PIECES.silver:
-      return <Silver side={side} ref={ref}/>;
+      return <Silver side={side} ref={ref} isPromoted={isPromoted}/>;
     case PIECES.golden:
-      return <Golden side={side} ref={ref}/>;
+      return <Golden side={side} ref={ref} isPromoted={isPromoted}/>;
     case PIECES.king:
-      return <King side={side} ref={ref}/>;
+      return <King side={side} ref={ref} isPromoted={isPromoted}/>;
     case PIECES.rook:
-      return <Rook side={side} ref={ref}/>;
+      return <Rook side={side} ref={ref} isPromoted={isPromoted}/>;
     case PIECES.bishop:
-      return <Bishop side={side} ref={ref}/>;
+      return <Bishop side={side} ref={ref} isPromoted={isPromoted}/>;
     default:
       return <></>;
   }

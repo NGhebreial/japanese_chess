@@ -1,9 +1,9 @@
 import Piece from "./index";
-import { PIECES_MOVEMENTS } from "../constants";
+import { PIECES, PIECES_MOVEMENTS } from "../constants";
 
 class Lance extends Piece {
   name = () => {
-    return 'Lance';
+    return PIECES.lance;
   };
 
   imageLink = () => {

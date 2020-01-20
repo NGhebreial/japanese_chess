@@ -6,7 +6,7 @@ import "./styles.css";
 import { COLS, ROWS } from '../constants';
 import uuid from 'uuid/v4';
 import getInitialPiecesDisposition from '../../helpers/getInitialPiecesDisposition';
-import getHighlightedIndexes from '../../helpers/getHighlightedIndexes';
+import getValidPositions from '../../helpers/getValidPositions';
 import Blank from '../Blank/Blank';
 import buildPieceObject from '../../helpers/buildPieceObject';
 import PropTypes from 'react-proptypes';
@@ -71,7 +71,7 @@ class Board extends React.Component {
     if (piece.ref && piece.ref.current.props.side === turn) {
       const { pieces } = this.state;
       const new_pieces = this.removeHighlighted(pieces);
-      const indexes = getHighlightedIndexes(new_pieces, piece);
+      const indexes = getValidPositions(new_pieces, piece);
       indexes.map((index) => (new_pieces[index[0]][index[1]].isHighlight = true));
       this.setState({ pieces: new_pieces, selected: piece, indexes });
     }

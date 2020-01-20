@@ -10,6 +10,10 @@ import getValidPositions from '../../helpers/getValidPositions';
 import Blank from '../Blank/Blank';
 import buildPieceObject from '../../helpers/buildPieceObject';
 import PropTypes from 'react-proptypes';
+import canBePromoted from '../../helpers/canBePromoted';
+import Promote from '../Promote';
+import getPieceComponent from '../../helpers/getComponentByPiece';
+import shouldBePromoted from '../../helpers/shouldBePromoted';
 
 class Board extends React.Component {
 
@@ -19,10 +23,14 @@ class Board extends React.Component {
     this.removeHighlighted = this.removeHighlighted.bind(this);
     this.pieceSelected = this.pieceSelected.bind(this);
     this.movePiece = this.movePiece.bind(this);
+    this.checkPromotable = this.checkPromotable.bind(this);
+    this.promotePiece = this.promotePiece.bind(this);
+    this.finishTurn = this.finishTurn.bind(this);
     this.state = {
       pieces: getInitialPiecesDisposition(),
       selected: {},
       indexes: [],
+      isPromotable: false,
     }
   }
 
@@ -52,7 +60,6 @@ class Board extends React.Component {
 
   movePiece = (piece) => {
     const { pieces, selected } = this.state;
-    const { switchTurn } = this.props;
     const previousPosition = selected.position;
     const newPosition = piece.position;
     //Set the selected piece in the new position
@@ -61,19 +68,18 @@ class Board extends React.Component {
     //Set the new position empty
     pieces[previousPosition[0]][previousPosition[1]] =
       buildPieceObject(<Blank/>, previousPosition[0], previousPosition[1], null, true);
-    const new_pieces = this.removeHighlighted(pieces);
-    switchTurn();
-    this.setState({ pieces: new_pieces, selected: {}, indexes: [] });
+    this.checkPromotable(selected, previousPosition, this.removeHighlighted(pieces));
   };
 
   pieceSelected = (piece) => {
     const { turn } = this.props;
+
     if (piece.ref && piece.ref.current.props.side === turn) {
       const { pieces } = this.state;
-      const new_pieces = this.removeHighlighted(pieces);
-      const indexes = getValidPositions(new_pieces, piece);
-      indexes.map((index) => (new_pieces[index[0]][index[1]].isHighlight = true));
-      this.setState({ pieces: new_pieces, selected: piece, indexes });
+      const newPieces = this.removeHighlighted(pieces);
+      const indexes = getValidPositions(newPieces, piece);
+      indexes.map((index) => (newPieces[index[0]][index[1]].isHighlight = true));
+      this.setState({ pieces: newPieces, selected: piece, indexes });
     }
   };
 
@@ -87,41 +93,80 @@ class Board extends React.Component {
     });
   };
 
+  checkPromotable = (piece, previousPosition, pieces) => {
+    const isPromotable = canBePromoted(piece, previousPosition);
+    if (isPromotable) {
+      // If it's promotable check if it should be because doesn't have more movements
+      if (shouldBePromoted(piece))
+        this.promotePiece();
+      else {
+        this.setState({ pieces, indexes: [], isPromotable });
+      }
+    } else {
+      this.finishTurn(pieces);
+    }
+  };
+
+  promotePiece = () => {
+    const { pieces, selected } = this.state;
+    selected.component = getPieceComponent(selected.ref.current.name(),
+      selected.ref.current.props.side,
+      selected.ref,
+      true);
+    pieces[selected.position[0]][selected.position[1]] = selected;
+    this.finishTurn(pieces);
+  };
+
+  finishTurn = (pieces) => {
+    const { switchTurn } = this.props;
+    const newPieces = pieces === null ? this.state.pieces : pieces;
+    this.setState({ selected: {}, indexes: [], isPromotable: false, newPieces });
+    switchTurn();
+  };
 
   render() {
 
-    const { pieces } = this.state;
+    const { pieces, isPromotable } = this.state;
     return (
-      <Container>
-        <div className="board">
-          <Row className="colIndex">
+      <>
+        {
+          isPromotable &&
+          <Promote promotePiece={this.promotePiece} finishTurn={this.finishTurn}/>
+        }
+        <Container style={{ marginTop: isPromotable ? '-39%' : '0' }}>
+          <div className="side-white-indicator"/>
+          <div className="board">
+            <Row className="colIndex">
+              {
+                COLS.map((col, i) => {
+                    return <Col key={uuid()}>{col}</Col>
+                  }
+                )
+              }
+            </Row>
             {
-              COLS.map((col, i) => {
-                  return <Col key={uuid()}>{col}</Col>
-                }
-              )
-            }
-          </Row>
-          {
-            Object.keys(pieces).map((piece_i, i) => {
-              return (
-                <>
-                  <Row key={uuid()}>
-                    <span className="rowIndex" key={uuid()}>{ROWS[i]}</span>
-                    {
-                      pieces[piece_i].map((piece) => {
-                          return <Square piece={piece} onClick={this.onClick} key={uuid()}/>
-                        }
-                      )
-                    }
-                  </Row>
-                </>
-              )
+              Object.keys(pieces).map((piece_i, i) => {
+                return (
+                  <>
+                    <Row key={uuid()}>
+                      <span className="rowIndex" key={uuid()}>{ROWS[i]}</span>
+                      {
+                        pieces[piece_i].map((piece) => {
+                            return <Square piece={piece} onClick={this.onClick} key={uuid()}/>
+                          }
+                        )
+                      }
+                    </Row>
+                  </>
+                )
 
-            })
-          }
-        </div>
-      </Container>
+              })
+            }
+
+          </div>
+          <div className="side-black-indicator"/>
+        </Container>
+      </>
     );
   }
 }

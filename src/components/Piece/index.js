@@ -6,21 +6,6 @@ import './styles.css'
  * Auxiliary class with common methods for the pieces
  * */
 class Piece extends React.Component {
-  constructor(props) {
-    super(props);
-    this.promote = this.promote.bind(this);
-    this.state = {
-      isPromoted: false,
-      attackCoords: [],
-    };
-  }
-
-  promote = () => {
-    if (this.isPromotable) {
-      this.setState({ isPromoted: true })
-    }
-  };
-
   name = () => {
     return '';
   };
@@ -46,8 +31,7 @@ class Piece extends React.Component {
   };
 
   render() {
-    const { isPromoted } = this.state;
-    const { side } = this.props;
+    const { side, isPromoted } = this.props;
     return (
       <div className="piece">
         <img src={!isPromoted ? this.imageLink() : this.imagePromoted()} alt={this.name()}
@@ -58,6 +42,7 @@ class Piece extends React.Component {
 }
 
 Piece.propsTypes = {
-  side: PropTypes.string.isRequired
+  side: PropTypes.string.isRequired,
+  isPromoted: PropTypes.bool.isRequired,
 };
 export default Piece;

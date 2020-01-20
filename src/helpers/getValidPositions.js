@@ -1,7 +1,7 @@
 import { COLS, ROWS, TURNS } from '../components/constants';
 
-const getHighlightedIndexes = (pieces, piece) => {
-  const indexes = [];
+const getValidPositions = (pieces, piece) => {
+  const finalPositions = [];
   let blockIndex = [];
   const currentPosition = piece.position;
   const objectRef = piece.ref.current;
@@ -9,8 +9,8 @@ const getHighlightedIndexes = (pieces, piece) => {
   let isNotValidMovement = false;
   //TODO: Check if its promoted to retrieve the proper coords
   const movements = objectRef.attackCoords();
-  for (let i = 0; i < movements.length; i++) {
-    const movement = movements[i];
+
+  movements.forEach( (movement) => {
     //Add if they are white, subtract if they are black
     const x = pieceColor === TURNS.white ? currentPosition[1] + movement[0] :
       currentPosition[1] - movement[0];
@@ -23,17 +23,17 @@ const getHighlightedIndexes = (pieces, piece) => {
       if (isNotValidMovement) {
         blockIndex.push([y, x]);
       } else if (position.isEmpty) {
-        indexes.push([y, x]);
+        finalPositions.push([y, x]);
       } else if (position.ref.current.props.side !== objectRef.props.side) {
-        indexes.push([y, x]);
+        finalPositions.push([y, x]);
         blockIndex.push([y, x]);
       } else {
         blockIndex.push([y, x]);
       }
     }
-  }
+  });
 
-  return indexes;
+  return finalPositions;
 };
 
 function isBlocked(x, y, piece, blockIndex) {
@@ -62,4 +62,4 @@ function isBlocked(x, y, piece, blockIndex) {
   return isBlocked;
 }
 
-export default getHighlightedIndexes;
+export default getValidPositions;

@@ -10,7 +10,7 @@ import Bishop from '../components/Piece/Bishop';
 import React from 'react';
 
 const getPieceComponent = (piece, side, ref) => {
-  switch(piece){
+  switch (piece) {
     case PIECES.pawn:
       return <Pawn side={side} ref={ref}/>;
     case PIECES.lance:

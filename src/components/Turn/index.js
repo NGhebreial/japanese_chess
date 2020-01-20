@@ -1,13 +1,17 @@
 import PropTypes from 'react-proptypes';
 import React from "react";
 
-const Turn = ({ turn }) => {
-  return (
-    <div>
-      <div>{turn}</div>
-    </div>
-  );
-};
+class Turn extends React.Component {
+
+  render() {
+    const { turn } = this.props;
+    return (
+      <div>
+        <div>Turn of: {turn}</div>
+      </div>
+    );
+  }
+}
 
 Turn.propTypes = {
   turn: PropTypes.string.isRequired

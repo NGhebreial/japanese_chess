@@ -1,20 +1,21 @@
-.board{
-  border:  3em solid lightgrey;
+.board {
+  border: 3em solid lightgrey;
   border-radius: 2em;
 }
 
-.row{
+.row {
   margin: 0;
 }
 
-.rowIndex{
+.rowIndex {
   position: absolute;
   z-index: 100;
   margin-left: -1.3em;
   margin-top: 1em;
   font-size: 25px;
 }
-.colIndex{
+
+.colIndex {
   margin-top: -1.5em;
   font-size: 25px;
 }

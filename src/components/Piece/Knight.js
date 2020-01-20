@@ -1,30 +1,30 @@
 import Piece from "./index";
-import {PIECES_MOVEMENTS} from "../constants";
+import { PIECES_MOVEMENTS } from "../constants";
 
-class Knight extends Piece{
-    name = () => {
-        return 'Knight';
-    };
+class Knight extends Piece {
+  name = () => {
+    return 'Knight';
+  };
 
-    imageLink = () => {
-        return 'https://orangain.github.io/shogi-piece-images/dist/0KE.svg';
-    };
+  imageLink = () => {
+    return 'https://orangain.github.io/shogi-piece-images/dist/0KE.svg';
+  };
 
-    imagePromoted = () => {
-        return 'https://orangain.github.io/shogi-piece-images/dist/0NK.svg';
-    };
+  imagePromoted = () => {
+    return 'https://orangain.github.io/shogi-piece-images/dist/0NK.svg';
+  };
 
-    isPromotable = () => {
-        return true;
-    };
+  isPromotable = () => {
+    return true;
+  };
 
-    attackCoords = () => {
-        return PIECES_MOVEMENTS.knight;
-    };
+  attackCoords = () => {
+    return PIECES_MOVEMENTS.knight;
+  };
 
-    promotedAttackCoords = () => {
-        return PIECES_MOVEMENTS.golden;
-    }
+  promotedAttackCoords = () => {
+    return PIECES_MOVEMENTS.golden;
+  }
 }
 
 export default Knight;

@@ -6,10 +6,10 @@ Japanese chess implementation made with ReactJS.
 So far implemented:
 
 * Pieces movement
-
-To implement:
 * Promoted pieces
 * Movement of promoted pieces
+
+To implement:
 * Re-introduce captured pieces
 * Check and checkmate
 

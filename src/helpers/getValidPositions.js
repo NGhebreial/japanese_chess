@@ -7,10 +7,11 @@ const getValidPositions = (pieces, piece) => {
   const objectRef = piece.ref.current;
   const pieceColor = objectRef.props.side;
   let isNotValidMovement = false;
-  //TODO: Check if its promoted to retrieve the proper coords
-  const movements = objectRef.attackCoords();
 
-  movements.forEach( (movement) => {
+  const movements = objectRef.props.isPromoted ? objectRef.promotedAttackCoords() :
+    objectRef.attackCoords();
+
+  movements.forEach((movement) => {
     //Add if they are white, subtract if they are black
     const x = pieceColor === TURNS.white ? currentPosition[1] + movement[0] :
       currentPosition[1] - movement[0];

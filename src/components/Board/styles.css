@@ -19,3 +19,23 @@
   margin-top: -1.5em;
   font-size: 25px;
 }
+
+.side-black-indicator {
+  background-color: black;
+  border: white solid 1px;
+  max-width: 30px;
+  min-height: 30px;
+  margin-left: 49%;
+  margin-top: 5px;
+  border-radius: 15px;
+}
+
+.side-white-indicator {
+  background-color: white;
+  border: black solid 1px;
+  max-width: 30px;
+  min-height: 30px;
+  margin-left: 49%;
+  margin-bottom: 5px;
+  border-radius: 15px;
+}

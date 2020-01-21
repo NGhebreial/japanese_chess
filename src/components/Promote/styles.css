@@ -1,0 +1,20 @@
+.promote-container {
+  margin-right: 90%;
+  margin-top: 32%;
+}
+
+button {
+  min-width: 8em;
+  margin-bottom: 10%;
+  border-radius: 4px;
+}
+
+button.promote {
+  background-color: #61dafb;
+  border-color: white;
+}
+
+button.finish {
+  background-color: white;
+  border-color: #61dafb;
+}

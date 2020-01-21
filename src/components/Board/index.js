@@ -67,14 +67,14 @@ class Board extends React.Component {
     pieces[newPosition[0]][newPosition[1]] = selected;
     //Set the new position empty
     pieces[previousPosition[0]][previousPosition[1]] =
-      buildPieceObject(<Blank/>, previousPosition[0], previousPosition[1], null, true);
+      buildPieceObject("", "", false, previousPosition[0], previousPosition[1], true);
     this.checkPromotable(selected, previousPosition, this.removeHighlighted(pieces));
   };
 
   pieceSelected = (piece) => {
     const { turn } = this.props;
 
-    if (piece.ref && piece.ref.current.props.side === turn) {
+    if (piece.side === turn) {
       const { pieces } = this.state;
       const newPieces = this.removeHighlighted(pieces);
       const indexes = getValidPositions(newPieces, piece);
@@ -95,7 +95,7 @@ class Board extends React.Component {
 
   checkPromotable = (piece, previousPosition, pieces) => {
     const isPromotable = canBePromoted(piece, previousPosition);
-    if (isPromotable) {
+    if (isPromotable && !piece.isPromoted) {
       // If it's promotable check if it should be because doesn't have more movements
       if (shouldBePromoted(piece))
         this.promotePiece();
@@ -109,10 +109,7 @@ class Board extends React.Component {
 
   promotePiece = () => {
     const { pieces, selected } = this.state;
-    selected.component = getPieceComponent(selected.ref.current.name(),
-      selected.ref.current.props.side,
-      selected.ref,
-      true);
+    selected.isPromoted = true;
     pieces[selected.position[0]][selected.position[1]] = selected;
     this.finishTurn(pieces);
   };

@@ -1,9 +1,10 @@
-function buildPieceObject(component, col_index, row_index, ref, isEmpty) {
+function buildPieceObject(piece, side, isPromoted, col_index, row_index, isEmpty) {
   return {
-    'component': component,
+    'piece': piece,
+    'side': side,
+    'isPromoted': isPromoted,
     'isHighlight': false,
     'position': [col_index, row_index],
-    'ref': ref,
     'isEmpty': isEmpty,
   };
 }

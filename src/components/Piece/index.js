@@ -5,7 +5,7 @@ import './styles.css'
 /**
  * Auxiliary class with common methods for the pieces
  * */
-class Piece extends React.Component {
+class Piece extends React.PureComponent {
   name = () => {
     return '';
   };
@@ -16,18 +16,6 @@ class Piece extends React.Component {
 
   imagePromoted = () => {
     return '';
-  };
-
-  isPromotable = () => {
-    throw new Error('isPromotable must be overridden in the child class');
-  };
-
-  attackCoords = () => {
-    throw new Error('attackCoords must be overridden in the child class');
-  };
-
-  promotedAttackCoords = () => {
-    return [];
   };
 
   render() {

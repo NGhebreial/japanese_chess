@@ -13,14 +13,6 @@ class King extends Piece {
     }
     return 'https://orangain.github.io/shogi-piece-images/dist/0GY.svg';
   };
-
-  isPromotable = () => {
-    return false;
-  };
-
-  attackCoords = () => {
-    return PIECES_MOVEMENTS.king;
-  };
 }
 
 export default King;

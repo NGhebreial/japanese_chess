@@ -1,21 +1,26 @@
-import { COLS, ROWS, TURNS } from '../components/constants';
+import {
+  COLS,
+  PIECES_MOVEMENTS,
+  PIECES_PROMOTED_MOVEMENTS,
+  ROWS,
+  TURNS
+} from '../components/constants';
 
 const getValidPositions = (pieces, piece) => {
   const finalPositions = [];
   let blockIndex = [];
   const currentPosition = piece.position;
-  const objectRef = piece.ref.current;
-  const pieceColor = objectRef.props.side;
+  const pieceSide = piece.side;
   let isNotValidMovement = false;
 
-  const movements = objectRef.props.isPromoted ? objectRef.promotedAttackCoords() :
-    objectRef.attackCoords();
+  const movements = piece.isPromoted ? PIECES_PROMOTED_MOVEMENTS[piece.piece] :
+    PIECES_MOVEMENTS[piece.piece];
 
   movements.forEach((movement) => {
     //Add if they are white, subtract if they are black
-    const x = pieceColor === TURNS.white ? currentPosition[1] + movement[0] :
+    const x = pieceSide === TURNS.white ? currentPosition[1] + movement[0] :
       currentPosition[1] - movement[0];
-    const y = pieceColor === TURNS.white ? currentPosition[0] + movement[1] :
+    const y = pieceSide === TURNS.white ? currentPosition[0] + movement[1] :
       currentPosition[0] - movement[1];
     //If it's in range
     if (x >= 0 && x < ROWS.length && y >= 0 && y < COLS.length) {
@@ -25,7 +30,7 @@ const getValidPositions = (pieces, piece) => {
         blockIndex.push([y, x]);
       } else if (position.isEmpty) {
         finalPositions.push([y, x]);
-      } else if (position.ref.current.props.side !== objectRef.props.side) {
+      } else if (position.side !== pieceSide) {
         finalPositions.push([y, x]);
         blockIndex.push([y, x]);
       } else {
@@ -33,7 +38,6 @@ const getValidPositions = (pieces, piece) => {
       }
     }
   });
-
   return finalPositions;
 };
 

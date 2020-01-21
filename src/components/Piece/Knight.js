@@ -13,18 +13,6 @@ class Knight extends Piece {
   imagePromoted = () => {
     return 'https://orangain.github.io/shogi-piece-images/dist/0NK.svg';
   };
-
-  isPromotable = () => {
-    return true;
-  };
-
-  attackCoords = () => {
-    return PIECES_MOVEMENTS.knight;
-  };
-
-  promotedAttackCoords = () => {
-    return PIECES_MOVEMENTS.golden;
-  }
 }
 
 export default Knight;

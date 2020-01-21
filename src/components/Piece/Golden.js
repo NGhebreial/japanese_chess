@@ -11,13 +11,6 @@ class Golden extends Piece {
     return 'https://orangain.github.io/shogi-piece-images/dist/0KI.svg';
   };
 
-  isPromotable = () => {
-    return false;
-  };
-
-  attackCoords = () => {
-    return PIECES_MOVEMENTS.golden;
-  };
 }
 
 export default Golden;

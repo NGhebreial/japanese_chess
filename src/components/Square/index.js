@@ -2,6 +2,7 @@ import PropTypes from 'react-proptypes';
 import React from "react";
 import { Col } from 'react-bootstrap';
 import "./styles.css";
+import getPieceComponent from '../../helpers/getComponentByPiece';
 
 const Square = ({ piece, onClick }) => {
   const className = piece.isHighlight ? "highlight square" : "square";
@@ -10,7 +11,7 @@ const Square = ({ piece, onClick }) => {
          onClick={() => {
            onClick(piece);
          }}>
-      {piece.component}
+      {getPieceComponent(piece.piece, piece.side, piece.ref, piece.isPromoted)}
     </Col>
   );
 };

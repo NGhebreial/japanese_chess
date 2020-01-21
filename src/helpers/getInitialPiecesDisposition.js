@@ -10,16 +10,15 @@ const getInitialPiecesDisposition = () => {
   COLS.forEach((col, col_index) => {
     pieces[col_index] = [];
     ROWS.forEach((row, row_index) => {
-      pieces[col_index].push(buildPieceObject(<Blank/>, col_index, row_index, null, true));
+      pieces[col_index].push(buildPieceObject("", "", false, col_index, row_index, true));
     });
   });
   // Generating the components for every piece based on the initial distribution on the board
   for (const turn in TURNS) {
     Object.keys(INITIAL_COORDS[turn]).forEach((key) => {
       INITIAL_COORDS[turn][key].forEach((piece_i) => {
-        const ref = React.createRef();
-        pieces[piece_i[0]][piece_i[1]] = buildPieceObject(getComponentByPiece(key, turn, ref),
-          piece_i[0], piece_i[1], ref, false);
+        pieces[piece_i[0]][piece_i[1]] = buildPieceObject(
+          key, turn, false, piece_i[0], piece_i[1], false);
       })
     });
   }

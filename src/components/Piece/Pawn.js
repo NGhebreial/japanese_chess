@@ -13,18 +13,6 @@ class Pawn extends Piece {
   imagePromoted = () => {
     return 'https://orangain.github.io/shogi-piece-images/dist/0TO.svg';
   };
-
-  isPromotable = () => {
-    return true;
-  };
-
-  attackCoords = () => {
-    return PIECES_MOVEMENTS.pawn;
-  };
-
-  promotedAttackCoords = () => {
-    return PIECES_MOVEMENTS.golden;
-  };
 }
 
 export default Pawn;

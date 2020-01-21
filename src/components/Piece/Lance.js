@@ -13,18 +13,6 @@ class Lance extends Piece {
   imagePromoted = () => {
     return 'https://orangain.github.io/shogi-piece-images/dist/0NY.svg';
   };
-
-  isPromotable = () => {
-    return true;
-  };
-
-  attackCoords = () => {
-    return PIECES_MOVEMENTS.lance;
-  };
-
-  promotedAttackCoords = () => {
-    return PIECES_MOVEMENTS.golden;
-  }
 }
 
 export default Lance;

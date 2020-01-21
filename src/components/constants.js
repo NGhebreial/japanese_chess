@@ -158,3 +158,16 @@ for (let i = 1; i <= ROWS.length; i++) {
 
   PIECES_MOVEMENTS.lance.push([0, i]);
 }
+
+export const PIECES_PROMOTED_MOVEMENTS = {
+  pawn: PIECES_MOVEMENTS.golden,
+  silver: PIECES_MOVEMENTS.golden,
+  knight: PIECES_MOVEMENTS.golden,
+  lance: PIECES_MOVEMENTS.golden,
+  bishop: PIECES_MOVEMENTS.bishop,
+  rook: PIECES_MOVEMENTS.rook
+};
+PIECES_PROMOTED_MOVEMENTS.bishop.push( [0, 1], [0, -1], [-1, 0], [1, 0]);
+PIECES_PROMOTED_MOVEMENTS.rook.push( [1, 1], [1, -1], [-1, 1], [1, 1]);
+
+

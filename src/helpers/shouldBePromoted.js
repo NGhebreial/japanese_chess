@@ -10,23 +10,23 @@ const PROMOTED_AREA_BLACK_KNIGHT = 1;
  * row
  * */
 const shouldBePromoted = (piece) => {
-  const name = piece.ref.current.name();
+  const name = piece.piece;
   //Checking lance or pawn
   const willLPBePromoted = (name === PIECES.lance || name === PIECES.pawn) &&
     (
-      (piece.ref.current.props.side === TURNS.white &&
+      (piece.side === TURNS.white &&
         PROMOTED_AREA_WHITE === piece.position[0])
       ||
-      (piece.ref.current.props.side === TURNS.black &&
+      (piece.side === TURNS.black &&
         PROMOTED_AREA_BLACK === piece.position[0])
     );
   //Checking knight
   const willKBePromoted = (name === PIECES.knight) &&
     (
-      (piece.ref.current.props.side === TURNS.white &&
+      (piece.side === TURNS.white &&
         PROMOTED_AREA_WHITE_KNIGHT === piece.position[0])
       ||
-      (piece.ref.current.props.side === TURNS.black &&
+      (piece.side === TURNS.black &&
         PROMOTED_AREA_BLACK_KNIGHT === piece.position[0])
     );
 

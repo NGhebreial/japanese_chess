@@ -6,6 +6,13 @@
 .row {
   margin: 0;
 }
+.piece {
+  margin-top: 1em;
+}
+
+img.white {
+  transform: rotate(180deg);
+}
 
 .rowIndex {
   position: absolute;

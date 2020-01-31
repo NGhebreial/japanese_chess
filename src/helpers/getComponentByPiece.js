@@ -1,36 +1,34 @@
 import { PIECES } from '../components/constants';
-import Pawn from '../components/Piece/Pawn';
-import Lance from '../components/Piece/Lance';
-import Knight from '../components/Piece/Knight';
-import Silver from '../components/Piece/Silver';
-import Golden from '../components/Piece/Golden';
-import King from '../components/Piece/King';
-import Rook from '../components/Piece/Rook';
-import Bishop from '../components/Piece/Bishop';
-import React from 'react';
-import Blank from '../components/Blank/Blank';
+import Pawn from '../utils/pieces/Pawn';
+import Lance from '../utils/pieces/Lance';
+import Knight from '../utils/pieces/Knight';
+import Silver from '../utils/pieces/Silver';
+import Golden from '../utils/pieces/Golden';
+import King from '../utils/pieces/King';
+import Rook from '../utils/pieces/Rook';
+import Bishop from '../utils/pieces/Bishop';
 
-const getPieceComponent = (piece, side, ref, isPromoted = false) => {
+const getPieceSrc = (piece, side, isPromoted = false) => {
   switch (piece) {
     case PIECES.pawn:
-      return <Pawn side={side} isPromoted={isPromoted}/>;
+      return Pawn(isPromoted);
     case PIECES.lance:
-      return <Lance side={side} isPromoted={isPromoted}/>;
+      return Lance(isPromoted);
     case PIECES.knight:
-      return <Knight side={side} isPromoted={isPromoted}/>;
+      return Knight(isPromoted);
     case PIECES.silver:
-      return <Silver side={side} isPromoted={isPromoted}/>;
+      return Silver(isPromoted);
     case PIECES.golden:
-      return <Golden side={side} isPromoted={isPromoted}/>;
+      return Golden();
     case PIECES.king:
-      return <King side={side} isPromoted={isPromoted}/>;
+      return King(side);
     case PIECES.rook:
-      return <Rook side={side} isPromoted={isPromoted}/>;
+      return Rook(isPromoted);
     case PIECES.bishop:
-      return <Bishop side={side} isPromoted={isPromoted}/>;
+      return Bishop(isPromoted);
     default:
-      return <Blank/>;
+      return '';
   }
 };
 
-export default getPieceComponent;
+export default getPieceSrc;

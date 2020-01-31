@@ -1,11 +1,12 @@
-function buildPieceObject(piece, side, isPromoted, col_index, row_index, isEmpty) {
+function buildPieceObject(id, piece, side, isPromoted, colIndex, rowIndex, isEmpty) {
   return {
-    'piece': piece,
-    'side': side,
-    'isPromoted': isPromoted,
-    'isHighlight': false,
-    'position': [col_index, row_index],
-    'isEmpty': isEmpty,
+    id,
+    piece,
+    side,
+    isPromoted,
+    isHighlight: false,
+    position: [colIndex, rowIndex],
+    isEmpty,
   };
 }
 

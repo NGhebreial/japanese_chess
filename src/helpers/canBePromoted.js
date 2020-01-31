@@ -7,18 +7,16 @@ const canBePromoted = (piece, previousPosition) => {
   const currentPosition = piece.position;
   return PIECES_PROMOTED_MOVEMENTS[piece.piece] && (
     (
-      piece.side === TURNS.white &&
-      (PROMOTED_AREA_WHITE.includes(currentPosition[0]) ||
-        PROMOTED_AREA_WHITE.includes(previousPosition[0]))
+      piece.side === TURNS.white
+      && (PROMOTED_AREA_WHITE.includes(currentPosition[0])
+        || PROMOTED_AREA_WHITE.includes(previousPosition[0]))
     )
-    ||
-    (
-      piece.side === TURNS.black &&
-      (PROMOTED_AREA_BLACK.includes(currentPosition[0]) ||
-        PROMOTED_AREA_BLACK.includes(previousPosition[0]))
+    || (
+      piece.side === TURNS.black
+      && (PROMOTED_AREA_BLACK.includes(currentPosition[0])
+        || PROMOTED_AREA_BLACK.includes(previousPosition[0]))
     )
   );
-
 };
 
 export default canBePromoted;

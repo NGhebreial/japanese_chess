@@ -1,22 +1,18 @@
-import React from "react";
-import Square from '../Square';
+import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
+import PropTypes from 'react-proptypes';
+import Square from '../Square';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./styles.css";
+import './styles.css';
 import { COLS, ROWS } from '../constants';
-import uuid from 'uuid/v4';
 import getInitialPiecesDisposition from '../../helpers/getInitialPiecesDisposition';
 import getValidPositions from '../../helpers/getValidPositions';
-import Blank from '../Blank/Blank';
 import buildPieceObject from '../../helpers/buildPieceObject';
-import PropTypes from 'react-proptypes';
 import canBePromoted from '../../helpers/canBePromoted';
 import Promote from '../Promote';
-import getPieceComponent from '../../helpers/getComponentByPiece';
 import shouldBePromoted from '../../helpers/shouldBePromoted';
 
 class Board extends React.Component {
-
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
@@ -31,7 +27,7 @@ class Board extends React.Component {
       selected: {},
       indexes: [],
       isPromotable: false,
-    }
+    };
   }
 
   onClick = (piece) => {
@@ -40,16 +36,16 @@ class Board extends React.Component {
     if (Object.keys(selected).length === 0) {
       this.pieceSelected(piece);
     } else {
-      let pieceToChange = pieces[piece.position[0]][piece.position[1]];
-      const isValidIndex = indexes.some(i => i[0] === piece.position[0] && i[1] === piece.position[1]);
+      const pieceToChange = pieces[piece.position[0]][piece.position[1]];
+      const isValidIndex = indexes.some((i) => i[0] === piece.position[0] && i[1] === piece.position[1]);
       // Move the piece if it's a valid movement
       if (pieceToChange.isHighlight && isValidIndex) {
         this.movePiece(piece);
       }
-      //If the square selected is empty and it's not a valid movement -> remove selection
+      // If the square selected is empty and it's not a valid movement -> remove selection
       else if (piece.isEmpty) {
-        const new_pieces = this.removeHighlighted(pieces);
-        this.setState({ pieces: new_pieces, selected: {}, indexes: [] });
+        const newPieces = this.removeHighlighted(pieces);
+        this.setState({ pieces: newPieces, selected: {}, indexes: [] });
       }
       // In other case another piece is being selected
       else {
@@ -62,12 +58,17 @@ class Board extends React.Component {
     const { pieces, selected } = this.state;
     const previousPosition = selected.position;
     const newPosition = piece.position;
-    //Set the selected piece in the new position
+    // Set the selected piece in the new position
     selected.position = newPosition;
     pieces[newPosition[0]][newPosition[1]] = selected;
-    //Set the new position empty
-    pieces[previousPosition[0]][previousPosition[1]] =
-      buildPieceObject("", "", false, previousPosition[0], previousPosition[1], true);
+    // Set the new position empty
+    pieces[previousPosition[0]][previousPosition[1]] = buildPieceObject(piece.id,
+      '',
+      '',
+      false,
+      previousPosition[0],
+      previousPosition[1],
+      true);
     this.checkPromotable(selected, previousPosition, this.removeHighlighted(pieces));
   };
 
@@ -83,22 +84,19 @@ class Board extends React.Component {
     }
   };
 
-  removeHighlighted = (pieces) => {
-    return Object.keys(pieces).map((piece_i) => {
-      //Getting only highlighted
-      const highlighted = pieces[piece_i].filter(p => p.isHighlight);
-      // Removing highlighted
-      highlighted.map(h => h.isHighlight = false);
-      return pieces[piece_i];
-    });
-  };
+  removeHighlighted = (pieces) => Object.keys(pieces).map((pieceIndex) => {
+    // Getting only highlighted
+    const highlighted = pieces[pieceIndex].filter((p) => p.isHighlight);
+    // Removing highlighted
+    highlighted.map((h) => h.isHighlight = false);
+    return pieces[pieceIndex];
+  });
 
   checkPromotable = (piece, previousPosition, pieces) => {
     const isPromotable = canBePromoted(piece, previousPosition);
     if (isPromotable && !piece.isPromoted) {
       // If it's promotable check if it should be because doesn't have more movements
-      if (shouldBePromoted(piece))
-        this.promotePiece();
+      if (shouldBePromoted(piece)) this.promotePiece();
       else {
         this.setState({ pieces, indexes: [], isPromotable });
       }
@@ -116,52 +114,55 @@ class Board extends React.Component {
 
   finishTurn = (pieces) => {
     const { switchTurn } = this.props;
-    const newPieces = pieces === null ? this.state.pieces : pieces;
-    this.setState({ selected: {}, indexes: [], isPromotable: false, newPieces });
+    const { pieces: piecesState } = this.state;
+    const newPieces = pieces === null ? piecesState : pieces;
+    this.setState({
+      selected: {},
+      indexes: [],
+      isPromotable: false,
+      pieces: newPieces,
+    });
     switchTurn();
   };
 
   render() {
-
     const { pieces, isPromotable } = this.state;
     return (
       <>
         {
-          isPromotable &&
-          <Promote promotePiece={this.promotePiece} finishTurn={this.finishTurn}/>
+          isPromotable
+          && <Promote promotePiece={this.promotePiece} finishTurn={this.finishTurn} />
         }
         <Container style={{ marginTop: isPromotable ? '-39%' : '0' }}>
-          <div className="side-white-indicator"/>
+          <div className="side-white-indicator" />
           <div className="board">
             <Row className="colIndex">
               {
-                COLS.map((col, i) => {
-                    return <Col key={uuid()}>{col}</Col>
-                  }
-                )
+                COLS.map((col) => <Col key={col}>{col}</Col>)
               }
             </Row>
             {
-              Object.keys(pieces).map((piece_i, i) => {
-                return (
-                  <>
-                    <Row key={uuid()}>
-                      <span className="rowIndex" key={uuid()}>{ROWS[i]}</span>
-                      {
-                        pieces[piece_i].map((piece) => {
-                            return <Square piece={piece} onClick={this.onClick} key={uuid()}/>
-                          }
-                        )
-                      }
-                    </Row>
-                  </>
-                )
+              Object.keys(pieces).map((pieceIndex, i) => (
+                <div key={ROWS[i]}>
+                  <Row>
+                    <span className="rowIndex">{ROWS[i]}</span>
+                    {
+                      pieces[pieceIndex].map((piece) => (
+                        <Square
+                          piece={piece}
+                          onClick={this.onClick}
+                          key={piece.id}
+                        />
+                      ))
+                    }
 
-              })
+                  </Row>
+                </div>
+              ))
             }
 
           </div>
-          <div className="side-black-indicator"/>
+          <div className="side-black-indicator" />
         </Container>
       </>
     );
@@ -170,10 +171,7 @@ class Board extends React.Component {
 
 Board.propTypes = {
   turn: PropTypes.string.isRequired,
-  switchTurn: PropTypes.func,
+  switchTurn: PropTypes.func.isRequired,
 };
-Board.defaultProps = {
-  switchTurn: () => {
-  },
-};
+
 export default Board;
